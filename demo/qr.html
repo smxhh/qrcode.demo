@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>qrcode</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<script src="jquery-1.8.3.min.js"></script>
+		<script src="jquery.qrcode.min.js"></script>
+	</head>
+	
+	<body>
+		<input type="text" id="urlText"><input type="button" value="生成" onclick="createQrcode()"> <input type="button" value="下载" onclick="saveFile()"> <br>
+		<div id="qrcode"></div>
+	</body>
+	
+	<script>
+		function createQrcode(){			
+			$("#qrcode").empty();
+			$("#qrcode").qrcode({
+				width : 150,
+				height : 150,
+				text:$("#urlText").val(),
+		
+			});
+		}
+	
+	
+		function saveFile(){
+			var qrcode = document.getElementById("qrcode");
+			var type="png";
+			var imgData = qrcode.toDataURL(type);
+			var filename = 'jd_diaoyan_' + new Date().getTime() + '.' + type;
+			var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+			save_link.href = imgData;
+			save_link.download = filename;
+			var event = document.createEvent('MouseEvents');
+			event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			save_link.dispatchEvent(event);
+		}
+
+	</script>
+</html>
